@@ -30,23 +30,48 @@ class _MyAppState extends State<MyApp> {
     WidgetKit.reloadTimelines('test');
 
     final data = FlutterWidgetData('Hello From Flutter');
-    final resultString =
-    await WidgetKit.getItem('testString', 'group.com.fasky');
-    final resultBool = await WidgetKit.getItem('testBool', 'group.com.fasky');
-    final resultNumber =
-    await WidgetKit.getItem('testNumber', 'group.com.fasky');
-    final resultJsonString =
-    await WidgetKit.getItem('testJson', 'group.com.fasky');
+    final resultString = await WidgetKit.getItem(
+      'testString',
+      'group.ios.widget.kit',
+    );
+    final resultBool = await WidgetKit.getItem(
+      'testBool',
+      'group.ios.widget.kit',
+    );
+    final resultNumber = await WidgetKit.getItem(
+      'testNumber',
+      'group.ios.widget.kit',
+    );
+    final resultJsonString = await WidgetKit.getItem(
+      'testJson',
+      'group.ios.widget.kit',
+    );
 
     var resultData;
     if (resultJsonString != null) {
       resultData = FlutterWidgetData.fromJson(jsonDecode(resultJsonString));
     }
 
-    WidgetKit.setItem('testString', 'Hello World', 'group.com.fasky');
-    WidgetKit.setItem('testBool', false, 'group.com.fasky');
-    WidgetKit.setItem('testNumber', 10, 'group.com.fasky');
-    WidgetKit.setItem('testJson', jsonEncode(data), 'group.com.fasky');
+    WidgetKit.setItem(
+      'testString',
+      'Hello World',
+      'group.ios.widget.kit',
+    );
+    WidgetKit.setItem(
+      'testBool',
+      false,
+      'group.ios.widget.kit',
+    );
+    WidgetKit.setItem(
+      'testNumber',
+      10,
+      'group.ios.widget.kit',
+    );
+    WidgetKit.setItem(
+      'testJson',
+      jsonEncode(data),
+      'group.ios.widget.kit',
+    );
   }
 
   @override
@@ -74,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                     jsonEncode(
                       FlutterWidgetData(textController.text),
                     ),
-                    'group.com.fasky',
+                    'group.ios.widget.kit',
                   );
                   WidgetKit.reloadAllTimelines();
                 },
@@ -82,7 +107,10 @@ class _MyAppState extends State<MyApp> {
               ),
               RaisedButton(
                 onPressed: () {
-                  WidgetKit.removeItem('widgetData', 'group.com.fasky');
+                  WidgetKit.removeItem(
+                    'widgetData',
+                    'group.ios.widget.kit',
+                  );
                   WidgetKit.reloadAllTimelines();
                 },
                 child: Text('Remove Widget Data'),
