@@ -51,22 +51,83 @@ struct Provider: IntentTimelineProvider {
 
 struct FlutterWidgetEntryView : View {
     var entry: Provider.Entry
+    var title: String
+    
+    @State var isChecked:Bool = true
+    func toggle(){isChecked = !isChecked}
 
     private var FlutterDataView: some View {
-      Text(entry.flutterData!.text)
+        ZStack {
+            VStack(alignment: .center) {
+                HStack(alignment: .center) {
+                    Text(title)
+                        .font(.title)
+                }
+                Button(action: toggle){
+                    HStack{
+                        Image(systemName: isChecked ? "checkmark.circle": "circle")
+                        Text(title)
+                        Spacer()
+                    }
+                }.padding(.leading, 15)
+                Button(action: toggle){
+                    HStack{
+                        Image(systemName: isChecked ? "checkmark.circle": "circle")
+                        Text(title)
+                        Spacer()
+                    }
+                }.padding(.leading, 15)
+                Button(action: toggle){
+                    HStack{
+                        Image(systemName: isChecked ? "checkmark.circle": "circle")
+                        Text(title)
+                        Spacer()
+                    }
+                }.padding(.leading, 15)
+            }
+        }
     }
 
     private var NoDataView: some View {
-      Text("No Data found! Go to the Flutter App")
+        // 内包する子Viewを重ねて配置するStack Viewです。
+        ZStack {
+            Color.yellow.edgesIgnoringSafeArea(.all)
+            
+            VStack(alignment: .center) {
+                HStack {
+                    Text(entry.flutterData!.text)
+                        .font(.subheadline)
+                        .frame(width: 300, height: 100)
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Todo list Todo list")
+                        .font(.caption)
+                        .frame(width: 300, height: 100)
+                    Spacer()
+                }
+                HStack {
+                    Text("Todo list")
+                        .font(.caption)
+                        .frame(width: 300, height: 100)
+                    Spacer()
+                }
+            }
+        }
     }
-
+    
     var body: some View {
-      if(entry.flutterData == nil) {
-        NoDataView
-      } else {
         FlutterDataView
-      }
     }
+    
+//    var body: some View {
+//      if(entry.flutterData == nil) {
+//        NoDataView
+//      } else {
+//        FlutterDataView
+//      }
+//    }
 }
 
 
@@ -76,7 +137,7 @@ struct FlutterWidget: Widget {
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
-            FlutterWidgetEntryView(entry: entry)
+            FlutterWidgetEntryView(entry: entry, title:"Todo list")
         }
         .configurationDisplayName("Flutter Example Widget")
         .description("This is an example widget which communicates with a Flutter App.")
@@ -85,7 +146,7 @@ struct FlutterWidget: Widget {
 
 struct FlutterWidget_Previews: PreviewProvider {
     static var previews: some View {
-        FlutterWidgetEntryView(entry: SimpleEntry(date: Date(), flutterData: nil))
+        FlutterWidgetEntryView(entry: SimpleEntry(date: Date(), flutterData: nil), title:"Todo list")
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
